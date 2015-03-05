@@ -25,7 +25,30 @@ import java.util.List;
 @SuppressWarnings("UnusedDeclaration")
 public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
 
+    public interface GetMemesCallback {
+
+        public void onMemesResult (List<MemeEntity> memesList);
+
+        public void onMemesError ();
+    }
+
     public static final String API_ENDPOINT = "http://alltheragefaces.com/api/all/faces";
+
+    private final GetMemesCallback mCallback;
+
+    /**
+     * Main constructor
+     *
+     * @param callback that will be fired when the AsyncTask ends
+     */
+    public GetMemesAsyncTask(GetMemesCallback callback) {
+
+        if (callback == null) {
+            throw new IllegalArgumentException("The callback argument cannot be null");
+        }
+
+        mCallback = callback;
+    }
 
     @Override
     protected List<MemeEntity> doInBackground(Void... params) {
@@ -62,6 +85,12 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
     protected void onPostExecute(List<MemeEntity> memeEntities) {
 
         super.onPostExecute(memeEntities);
+
+        if (memeEntities != null)
+            mCallback.onMemesResult(memeEntities);
+
+        else
+            mCallback.onMemesError();
     }
 
     /**
