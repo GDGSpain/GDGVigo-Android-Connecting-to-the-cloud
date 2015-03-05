@@ -3,7 +3,6 @@ package com.androidvigo.cloud;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -44,10 +43,9 @@ public class MainActivity extends ActionBarActivity
         for (int i = 0; i < memesList.size(); i++)
             memesNames[i] = memesList.get(i).getTitle();
 
-        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(
-            this, android.R.layout.simple_list_item_1, memesNames);
+        MemeAdapter memesAdapter = new MemeAdapter(this, memesList);
 
-        mMemesListView.setAdapter(listAdapter);
+        mMemesListView.setAdapter(memesAdapter);
     }
 
     @Override
