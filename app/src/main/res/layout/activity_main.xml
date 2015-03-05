@@ -20,4 +20,10 @@
         android:onClick="startGetMemesRequest"
         />
 
+    <ListView
+        android:id="@+id/activity_main_memes_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
+
 </RelativeLayout>
