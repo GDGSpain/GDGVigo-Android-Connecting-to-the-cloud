@@ -21,7 +21,9 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
 
         // OMG Background thread
-        askWithHttpURLConnection();
+        String result = askWithHttpURLConnection();
+        Log.d("[DEBUG]", "GetMemesAsyncTask doInBackground - Result: "+result);
+
         return null;
     }
 
@@ -30,8 +32,8 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, String> {
         HttpURLConnection urlConnection = null;
         BufferedReader reader           = null;
 
-        String memeString = null;
 
+        String memeString = null;
         try {
 
             URL memeURL = new URL(API_ENDPOINT);
