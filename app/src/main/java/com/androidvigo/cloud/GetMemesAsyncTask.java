@@ -18,23 +18,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Task used to make a request to the meme api, the result of
+ * the request is retrieved as a List of MemeEntities
+ */
 @SuppressWarnings("UnusedDeclaration")
-public class GetMemesAsyncTask extends AsyncTask<Void, Void, String> {
+public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
 
     public static final String API_ENDPOINT = "http://alltheragefaces.com/api/all/faces";
 
-    private List<MemeEntity> mMemeEntityList;
-
     @Override
-    protected void onPostExecute(String s) {
+    protected List<MemeEntity> doInBackground(Void... params) {
 
-        super.onPostExecute(s);
-    }
-
-    @Override
-    protected String doInBackground(Void... params) {
-
-        // OMG Background thread
+        List <MemeEntity> memeEntityList = null;
         String result = askWithHttpURLConnection();
 
         if (result != null) {
@@ -42,15 +38,15 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, String> {
             try {
 
                 JSONArray memeJSONArray = new JSONArray(result);
-                mMemeEntityList = new ArrayList<>(memeJSONArray.length());
+                memeEntityList = new ArrayList<>(memeJSONArray.length());
 
                 for (int position = 0; position < memeJSONArray.length(); position++) {
 
                     MemeEntity memeEntity = parseMemeJSON(memeJSONArray.getJSONObject(position));
-                    mMemeEntityList.add(memeEntity);
+                    memeEntityList.add(memeEntity);
                 }
 
-                Log.d("[DEBUG]", "GetMemesAsyncTask doInBackground - Meme list size: "+mMemeEntityList.size());
+                Log.d("[DEBUG]", "GetMemesAsyncTask doInBackground - Meme list size: " + memeEntityList.size());
 
             } catch (JSONException e) {
 
@@ -59,9 +55,22 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, String> {
             }
         }
 
-        return null;
+        return memeEntityList;
     }
 
+    @Override
+    protected void onPostExecute(List<MemeEntity> memeEntities) {
+
+        super.onPostExecute(memeEntities);
+    }
+
+    /**
+     * Uses an HttpUrlConnection object to start a GET
+     * request to the meme API
+     *
+     * @return an String with the response in a json or
+     * a null value if something fails
+     */
     public String askWithHttpURLConnection() {
 
         HttpURLConnection urlConnection = null;
@@ -131,7 +140,6 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, String> {
                 try {
 
                     reader.close();
-                    ;
 
                 } catch (final IOException e) {
 
@@ -144,6 +152,14 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, String> {
         return memeString;
     }
 
+    /**
+     * Parses a JSONObject into a MemeEntity entity
+     *
+     * @param jsonObject the jsonObject with the data about the meme
+     *
+     * @return an instance of a MemeEntity or a null value
+     * if something fails
+     */
     public MemeEntity parseMemeJSON(JSONObject jsonObject) {
 
         MemeEntity memeEntity = new MemeEntity();
