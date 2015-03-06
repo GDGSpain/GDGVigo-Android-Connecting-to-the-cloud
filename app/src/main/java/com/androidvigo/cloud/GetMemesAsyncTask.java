@@ -25,13 +25,6 @@ import java.util.List;
 @SuppressWarnings("UnusedDeclaration")
 public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
 
-    public interface GetMemesCallback {
-
-        public void onMemesResult (List<MemeEntity> memesList);
-
-        public void onMemesError ();
-    }
-
     public static final String API_ENDPOINT = "http://alltheragefaces.com/api/all/faces";
 
     private final GetMemesCallback mCallback;
@@ -221,5 +214,4 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
 
         return memeEntity;
     }
-
 }
