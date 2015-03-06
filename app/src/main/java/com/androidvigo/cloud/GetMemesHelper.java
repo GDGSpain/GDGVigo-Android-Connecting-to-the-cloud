@@ -11,7 +11,7 @@ import java.util.List;
 
 public class GetMemesHelper {
 
-    public static final String API_ENDPOINT = "http://alltheragefaces.com/api/all/faces";
+    private static final String API_ENDPOINT = "http://alltheragefaces.com/api/all/faces";
 
     public static GetMemesHelper INSTANCE = null;
 
