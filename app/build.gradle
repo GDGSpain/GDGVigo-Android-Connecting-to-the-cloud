@@ -26,6 +26,9 @@ dependencies {
     // Picasso library
     compile 'com.squareup.picasso:picasso:2.5.0'
 
-    // Google Gson libray
+    // Google Gson library
     compile 'com.google.code.gson:gson:2.3'
+
+    // Ion library
+    compile 'com.koushikdutta.ion:ion:2.0.9'
 }
