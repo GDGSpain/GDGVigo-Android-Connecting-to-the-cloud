@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity
         requestButton.setVisibility(View.GONE);
         mLoadingProgressBar.setVisibility(View.VISIBLE);
 
-        new GetMemesAsyncTask(this).execute();
+        GetMemesHelper.getInstance().loadMemesWithIon(this, this);
     }
 
     @Override
