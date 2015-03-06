@@ -25,4 +25,7 @@ dependencies {
 
     // Picasso library
     compile 'com.squareup.picasso:picasso:2.5.0'
+
+    // Google Gson libray
+    compile 'com.google.code.gson:gson:2.3'
 }
