@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -32,9 +35,13 @@ public class MemeAdapter extends ArrayAdapter<MemeEntity> {
 
         TextView titleTextView = (TextView) convertView.findViewById(R.id.item_meme_title);
         TextView emotionTextView = (TextView) convertView.findViewById(R.id.item_meme_emotion);
+        ImageView memeImageView = (ImageView) convertView.findViewById(R.id.item_meme_image);
 
         titleTextView.setText(currentMeme.getTitle());
         emotionTextView.setText(currentMeme.getEmotion());
+
+        // Load the meme image with Picasso
+        Picasso.with(mContext).load(currentMeme.getPng()).into(memeImageView);
 
         return convertView;
     }
