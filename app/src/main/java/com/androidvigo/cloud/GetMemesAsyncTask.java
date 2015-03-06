@@ -25,8 +25,6 @@ import java.util.List;
 @SuppressWarnings("UnusedDeclaration")
 public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
 
-    public static final String API_ENDPOINT = "http://alltheragefaces.com/api/all/faces";
-
     private final GetMemesCallback mCallback;
 
     /**
@@ -102,7 +100,7 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
         String memeString = null;
         try {
 
-            URL memeURL = new URL(API_ENDPOINT);
+            URL memeURL = new URL(GetMemesHelper.API_ENDPOINT);
 
             urlConnection = (HttpURLConnection) memeURL.openConnection();
             urlConnection.setRequestMethod("GET");
