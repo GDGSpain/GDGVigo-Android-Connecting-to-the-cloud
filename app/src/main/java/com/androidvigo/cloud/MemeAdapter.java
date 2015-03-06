@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.koushikdutta.ion.Ion;
 
 import java.util.List;
 
@@ -40,8 +40,10 @@ public class MemeAdapter extends ArrayAdapter<MemeEntity> {
         titleTextView.setText(currentMeme.getTitle());
         emotionTextView.setText(currentMeme.getEmotion());
 
-        // Load the meme image with Picasso
-        Picasso.with(mContext).load(currentMeme.getPng()).into(memeImageView);
+        // Load the meme image with Ion
+        Ion.with(mContext)
+            .load(currentMeme.getPng())
+            .intoImageView(memeImageView);
 
         return convertView;
     }
