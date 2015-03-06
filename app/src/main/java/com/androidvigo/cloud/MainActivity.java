@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity
-    implements GetMemesAsyncTask.GetMemesCallback {
+    implements GetMemesCallback {
 
     private ListView mMemesListView;
     private ProgressBar mLoadingProgressBar;

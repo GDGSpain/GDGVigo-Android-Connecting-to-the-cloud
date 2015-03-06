@@ -4,7 +4,9 @@ package com.androidvigo.cloud;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONArray;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,7 +17,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,30 +45,8 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
     @Override
     protected List<MemeEntity> doInBackground(Void... params) {
 
-        List <MemeEntity> memeEntityList = null;
         String result = askWithHttpURLConnection();
-
-        if (result != null) {
-
-            try {
-
-                JSONArray memeJSONArray = new JSONArray(result);
-                memeEntityList = new ArrayList<>(memeJSONArray.length());
-
-                for (int position = 0; position < memeJSONArray.length(); position++) {
-
-                    MemeEntity memeEntity = parseMemeJSON(memeJSONArray.getJSONObject(position));
-                    memeEntityList.add(memeEntity);
-                }
-
-                Log.d("[DEBUG]", "GetMemesAsyncTask doInBackground - Meme list size: " + memeEntityList.size());
-
-            } catch (JSONException e) {
-
-                Log.e("[ERROR]", "GetMemesAsyncTask, doInBackground (37)- " +
-                    "Error obtaining the meme array: "+e.getMessage());
-            }
-        }
+        List <MemeEntity> memeEntityList = parseMemesWithGSON(result);
 
         return memeEntityList;
     }
@@ -172,44 +151,14 @@ public class GetMemesAsyncTask extends AsyncTask<Void, Void, List<MemeEntity>> {
         return memeString;
     }
 
-    /**
-     * Parses a JSONObject into a MemeEntity entity
-     *
-     * @param jsonObject the jsonObject with the data about the meme
-     *
-     * @return an instance of a MemeEntity or a null value
-     * if something fails
-     */
-    public MemeEntity parseMemeJSON(JSONObject jsonObject) {
+    @SuppressWarnings("UnnecessaryLocalVariable")
+    public List<MemeEntity> parseMemesWithGSON (String json) {
 
-        MemeEntity memeEntity = new MemeEntity();
+        Gson gson = new Gson();
 
-        try {
+        List<MemeEntity> memesList = gson.fromJson(
+            json, new TypeToken<List<MemeEntity>>(){}.getType());
 
-            memeEntity.setTitle(jsonObject.getString("title"));
-            memeEntity.setEmotion(jsonObject.getString("emotion"));
-            memeEntity.setCanonical(jsonObject.getString("canonical"));
-            memeEntity.setCanonical(jsonObject.getString("created"));
-            memeEntity.setCategoryfk(jsonObject.getString("categoryfk"));
-            memeEntity.setTags(jsonObject.getString("tags"));
-            memeEntity.setViews(jsonObject.getString("views"));
-            memeEntity.setMoreinformation(jsonObject.getString("moreinformation"));
-            memeEntity.setIs_censored(jsonObject.getString("is_censored"));
-            memeEntity.setId(jsonObject.getString("id"));
-            memeEntity.setWeekly_views(jsonObject.getString("weekly_views"));
-            memeEntity.setPng(jsonObject.getString("png"));
-            memeEntity.setJpg(jsonObject.getString("jpg"));
-            memeEntity.setLargepng(jsonObject.getString("largepng"));
-            memeEntity.setSvg(jsonObject.getString("svg"));
-
-        } catch (JSONException e) {
-
-            memeEntity = null;
-
-            Log.e("[ERROR]", "GetMemesAsyncTask, parseMemeJSON (139)- " +
-                "Error: " + e.getMessage());
-        }
-
-        return memeEntity;
+        return memesList;
     }
 }

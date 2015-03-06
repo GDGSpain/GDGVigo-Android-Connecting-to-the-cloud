@@ -17,7 +17,4 @@ public class GetMemesHelper {
 
     private GetMemesHelper () { /* Unused */ }
 
-
-
-
 }
