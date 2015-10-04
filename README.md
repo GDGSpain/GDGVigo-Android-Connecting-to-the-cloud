@@ -1,3 +1,6 @@
+
+Session video -> ![here!](https://www.youtube.com/watch?v=1gDza2e0XQE)
+
 ## Android Vigo Study Group #2
 
 This project is focused on supporting the second meeting of the Android Study Group by [GDG Vigo](http://gdgvigo.com/)
