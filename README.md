@@ -1,5 +1,5 @@
 
-Session video -> ![here!](https://www.youtube.com/watch?v=1gDza2e0XQE)
+Session video -> [here!](https://www.youtube.com/watch?v=1gDza2e0XQE)
 
 ## Android Vigo Study Group #2
 
